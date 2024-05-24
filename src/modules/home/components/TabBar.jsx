@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { IconDocument, IconHammer, IconHome, IconUser } from "../assets/Icon";
+import React from "react";
+import { IconDocument, IconHammer, IconHome, IconUser, IconArea } from "../assets/Icon";
 
 const tabs = [
   { id: "home", icon: <IconHome />, title: "Home" },
   { id: "employees", icon: <IconUser />, title: "Employee Management" },
-  { id: "report", icon: <IconDocument />, title: "Report Management" },
+  { id: "transaction", icon: <IconDocument />, title: "Transaction Management" },
   { id: "equipment", icon: <IconHammer />, title: "Equipment Management" },
+  { id: "area", icon: <IconArea />, title: "Area Management" },
+
 ];
 
-function TabBar() {
-  const [activeTab, setActiveTab] = useState("employees");
+function TabBar({ activeTab, setActiveTab }) {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
-    console.log(tabId);
   };
+
   return (
     <ul className="flex w-full flex-row items-center justify-evenly text-white md:flex-col md:items-start md:gap-4">
       {tabs.map((item) => (
@@ -25,7 +26,7 @@ function TabBar() {
         >
           <div className="relative flex h-full w-full items-center lg:pl-12">
             <span className="hidden text-xs lg:block lg:w-[200px]">
-              {item.title}{" "}
+              {item.title}
             </span>
           </div>
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:left-[25px] md:top-[19px]">

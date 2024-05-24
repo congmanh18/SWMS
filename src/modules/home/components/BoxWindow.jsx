@@ -19,11 +19,13 @@ function BoxWindow(props) {
     category: "",
     gender: "",
     identification: "",
-    name: "",
-    national: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    nationality: "",
     phone: "",
-    place_of_origin: "",
-    place_of_residence: "",
+    poo: "",
+    por: "",
     role: "",
   });
   const [updatedElementModify, setUpdatedElementModify] = useState({});
@@ -34,11 +36,13 @@ function BoxWindow(props) {
       category: "",
       gender: "",
       identification: "",
-      name: "",
-      national: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      nationality: "",
       phone: "",
-      place_of_origin: "",
-      place_of_residence: "",
+      poo: "",
+      por: "",
       role: "",
     });
   };
@@ -97,7 +101,7 @@ function BoxWindow(props) {
             <div className="mt-5 flex flex-col gap-1 px-10">
               <Input
                 title="Name"
-                placeholder={elementModify.name}
+                placeholder={elementModify.first_name + " " + elementModify.middle_name + " " + elementModify.last_name}
                 type="text"
                 status={`${action.isRead ? "read" : "edit"}`}
                 name="name"
@@ -119,7 +123,7 @@ function BoxWindow(props) {
                   <Input
                     title="Role"
                     type="text"
-                    placeholder={elementModify.role}
+                    placeholder={elementModify.role_name}
                     status={`${action.isRead ? "read" : "edit"}`}
                     name="role"
                     onChange={handleInputChangeEdit}
@@ -153,7 +157,7 @@ function BoxWindow(props) {
                         onChange={(event) => {
                           handleInputChangeEdit("national", event.target.value);
                         }}
-                        defaultValue={elementModify.national}
+                        defaultValue={elementModify.nationality}
                         disabled={action.isRead}
                       >
                         <option value="default">Your national</option>
@@ -177,7 +181,7 @@ function BoxWindow(props) {
               />
               <Input
                 title="Citizen identification number"
-                placeholder={elementModify.identification}
+                placeholder={elementModify.cin}
                 type="password"
                 status={`${action.isRead ? "read" : "edit"}`}
                 name="identification"
@@ -185,18 +189,18 @@ function BoxWindow(props) {
               />
               <Input
                 title="Place of origin"
-                placeholder={elementModify.place_of_origin}
+                placeholder={elementModify.poo}
                 type="text"
                 status={`${action.isRead ? "read" : "edit"}`}
-                name="place_of_origin"
+                name="poo"
                 onChange={handleInputChangeEdit}
               />
               <Input
                 title="Place of residence"
-                placeholder={elementModify.place_of_residence}
+                placeholder={elementModify.por}
                 type="text"
                 status={`${action.isRead ? "read" : "edit"}`}
-                name="place_of_residence"
+                name="por"
                 onChange={handleInputChangeEdit}
               />
             </div>
@@ -374,7 +378,7 @@ function BoxWindow(props) {
                 placeholder=""
                 type="text"
                 status="add"
-                name="place_of_origin"
+                name="poo"
                 onChange={handleInputChangeCreate}
               />
               <Input
@@ -382,7 +386,7 @@ function BoxWindow(props) {
                 placeholder=""
                 type="text"
                 status="add"
-                name="place_of_residence"
+                name="por"
                 onChange={handleInputChangeCreate}
               />
             </div>

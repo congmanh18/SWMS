@@ -6,16 +6,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from "./modules/login/Login";
-import EmployeeManagement from "./modules/home/EmployeeManagement";
+import Home from "./modules/home/Home";
 import { ActionProvider } from "./modules/home/components/ActionContext";
 import { Provider } from "react-redux";
 import store from "./store/store";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Outlet />}>
-      <Route index element={<EmployeeManagement />} />
+      <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
-      <Route path="home" element={<EmployeeManagement />} />
+      <Route path="home" element={<Home />} />
     </Route>,
   ),
 );

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { IconPlus, IconArrowDown, IconSearch } from "./assets/Icon";
-import TableManager from "./components/TableManager";
-import BoxWindow from "./components/BoxWindow";  
+import TableManager from "./components/TbTransactionManagement";
 import { useDispatch, useSelector } from "react-redux";
-import { loadEmployee } from "../../store/employeeManagerSlice";
+import { loadTransaction } from "../../store/transactionManagerSlice";
 import { useAction } from "./components/ActionContext";
 
-function EmployeeManagement() {
-  const { dataEmployee } = useSelector((state) => state.employee_manager);
-  const [filter, setFilter] = useState("all");
+function Transaction() {
+  const { dataTransaction } = useSelector((state) => state.transaction_manager);
   const { action, setAction } = useAction();
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
@@ -20,10 +18,10 @@ function EmployeeManagement() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/users/listUser");
+        const response = await fetch("http://localhost:8080/transaction");
         const data = await response.json();
         if (data && Array.isArray(data.info)) {
-          dispatch(loadEmployee(data.info));
+          dispatch(loadTransaction(data.info));
         } else {
           console.error("Unexpected response format:", data);
         }
@@ -34,7 +32,7 @@ function EmployeeManagement() {
 
     fetchData();
     return () => {
-      dispatch(loadEmployee([]));
+      dispatch(loadTransaction([]));
     };
   }, [dispatch]);
 
@@ -66,37 +64,28 @@ function EmployeeManagement() {
       </div>
       <div className="h-full w-full flex-1 rounded-xl bg-white p-4">
         <div className="flex flex-row justify-between">
-          <h1 className="ml-1 font-bold">Employee Management</h1>
+          <h1 className="ml-1 font-bold">Transaction Management</h1>
           <div className="relative mr-3 flex flex-row">
             <select
-              name="employee"
-              id="selectEmployee"
+              name="transaction"
+              id="selectTransaction"
               defaultValue="all"
               onChange={handleSelectChange}
               className="inline-block cursor-pointer appearance-none rounded px-5 text-end focus:outline-none"
             >
-              <option value="all">All</option>
-              <option value="name">Name</option>
-              <option value="role">Role</option>
-              <option value="category">Category</option>
-              <option value="gender">Gender</option>
             </select>
-            <div className="pointer-events-none absolute right-[-5px] items-center">
-              <IconArrowDown />
-            </div>
+
           </div>
         </div>
         <div className="relative mt-5 h-[calc(100vh-200px)] overflow-auto">
           <TableManager
-            filter={filter}
-            dataEmployee={Array.isArray(dataEmployee) ? dataEmployee : []}
-            query={query}
+            dataTransaction={Array.isArray(dataTransaction) ? dataTransaction : []}
+            query={query} 
           />
         </div>
       </div>
-      <BoxWindow dataEmployee={Array.isArray(dataEmployee) ? dataEmployee : []} />
     </div>
   );
 }
 
-export default EmployeeManagement;
+export default Transaction;
