@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconPlus, IconArrowDown, IconSearch } from "./assets/Icon";
 import TableManager from "./components/TbTransactionManagement";
+import BoxWindow from "./components/BWTransaction";  
 import { useDispatch, useSelector } from "react-redux";
 import { loadTransaction } from "../../store/transactionManagerSlice";
 import { useAction } from "./components/ActionContext";
@@ -9,6 +10,9 @@ function Transaction() {
   const { dataTransaction } = useSelector((state) => state.transaction_manager);
   const { action, setAction } = useAction();
   const [query, setQuery] = useState("");
+  const handleReload = () => {
+    window.location.reload();
+  };
   const dispatch = useDispatch();
 
   const handleSelectChange = (event) => {
@@ -65,7 +69,10 @@ function Transaction() {
       <div className="h-full w-full flex-1 rounded-xl bg-white p-4">
         <div className="flex flex-row justify-between">
           <h1 className="ml-1 font-bold">Transaction Management</h1>
-          <div className="relative mr-3 flex flex-row">
+          <div className="App">
+            <button onClick={handleReload}>Reload</button>
+          </div>
+          {/* <div className="relative mr-3 flex flex-row">
             <select
               name="transaction"
               id="selectTransaction"
@@ -75,7 +82,7 @@ function Transaction() {
             >
             </select>
 
-          </div>
+          </div> */}
         </div>
         <div className="relative mt-5 h-[calc(100vh-200px)] overflow-auto">
           <TableManager
@@ -84,6 +91,7 @@ function Transaction() {
           />
         </div>
       </div>
+      <BoxWindow dataTransaction={Array.isArray(dataTransaction) ? dataTransaction : []} />
     </div>
   );
 }

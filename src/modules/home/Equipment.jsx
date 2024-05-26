@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconPlus, IconArrowDown, IconSearch } from "./assets/Icon";
 import TableManager from "./components/TbEquipmentManagement";
+import BoxWindow from "./components/BWEquipment";  
 import { useDispatch, useSelector } from "react-redux";
 import { loadEquipment } from "../../store/equipmentManagerSlice";
 import { useAction } from "./components/ActionContext";
@@ -9,6 +10,9 @@ function Equipment() {
   const { dataEquipment } = useSelector((state) => state.equipment_manager);
   const { action, setAction } = useAction();
   const [query, setQuery] = useState("");
+  const handleReload = () => {
+    window.location.reload();
+  };
   const dispatch = useDispatch();
 
   const handleSelectChange = (event) => {
@@ -65,21 +69,8 @@ function Equipment() {
       <div className="h-full w-full flex-1 rounded-xl bg-white p-4">
         <div className="flex flex-row justify-between">
           <h1 className="ml-1 font-bold">Equipment Management</h1>
-          <div className="relative mr-3 flex flex-row">
-            <select
-              name="equipment"
-              id="selectEquipment"
-              defaultValue="all"
-              onChange={handleSelectChange}
-              className="inline-block cursor-pointer appearance-none rounded px-5 text-end focus:outline-none"
-            >
-              <option value="all">All</option>
-              <option value="level">Category</option>
-              <option value="weight">Type</option>
-              <option value="latitude">Name</option>
-              <option value="longitude">Status</option>
-            </select>
-
+          <div className="App">
+            <button onClick={handleReload}>Reload</button>
           </div>
         </div>
         <div className="relative mt-5 h-[calc(100vh-200px)] overflow-auto">
@@ -89,6 +80,7 @@ function Equipment() {
           />
         </div>
       </div>
+      <BoxWindow dataEquipment={Array.isArray(dataEquipment) ? dataEquipment : []} />
     </div>
   );
 }

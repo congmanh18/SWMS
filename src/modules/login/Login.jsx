@@ -1,8 +1,39 @@
 import React, { useState } from "react";
 import logo_sologan from "./assets/logo_sologan.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 function Login() {
   const [isSignIn, setIsSignIn] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent the default link behavior
+    const response = await fetch("http://localhost:8080/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phone, password }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Login successful", data);
+      setLoginError("");
+      // Check if the response contains "found user"
+      if (data["found user"]) {
+        // Redirect to home page
+        navigate("/home");
+      }
+    } else {
+      console.error("Login failed", data);
+      setLoginError("Login failed. Please check your phone number and password.");
+    }
+  };
+
   return (
     <div className="overscroll-behavior-y: none; relative h-screen w-screen overflow-scroll">
       <div className="absolute overflow-auto overscroll-none">
@@ -83,8 +114,8 @@ function Login() {
                     <span className="block h-px w-[30%] bg-[#C5C5C5]"></span>
                   </div>
                   <div className="mt-8 flex w-full flex-col items-center gap-2">
-                    <div class="relative mb-6 w-full">
-                      <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                    <div className="relative mb-6 w-full">
+                      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -104,11 +135,13 @@ function Login() {
                         type="text"
                         id="phone-input"
                         placeholder="Enter your phone number"
-                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-12 text-xs text-gray-900"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-12 text-xs text-gray-900"
                       />
                     </div>
-                    <div class="relative mb-6 w-full">
-                      <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                    <div className="relative mb-6 w-full">
+                      <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -125,15 +158,21 @@ function Login() {
                         </svg>
                       </div>
                       <input
-                        type="text"
-                        id="phone-input"
+                        type="password"
+                        id="password-input"
                         placeholder="Enter your password"
-                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-12 text-xs text-gray-900"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-12 text-xs text-gray-900"
                       />
                     </div>
+                    {loginError && (
+                      <div className="mb-4 text-red-500 text-xs">{loginError}</div>
+                    )}
                     <Link
+                      onClick={handleLogin}
                       className="relative rounded-lg bg-[#5DA646] px-16 py-3 text-xs font-light uppercase text-white"
-                      to={"home"}
+                      to={"#"} // Change to "#" to prevent actual navigation
                     >
                       sign in
                       <div className="absolute right-2 top-1/4 block h-5 w-5 rounded-xl bg-[#79D45C]">
@@ -157,7 +196,7 @@ function Login() {
                       href=""
                       className="mt-4 text-xs font-medium capitalize text-black hover:text-green-500"
                     >
-                      Forgot Passwwod?
+                      Forgot Password?
                     </a>
                   </div>
                 </div>

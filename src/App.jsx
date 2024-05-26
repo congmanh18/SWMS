@@ -13,7 +13,7 @@ import store from "./store/store";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Outlet />}>
-      <Route index element={<Home />} />
+      <Route index element={<Login />} />
       <Route path="login" element={<Login />} />
       <Route path="home" element={<Home />} />
     </Route>,

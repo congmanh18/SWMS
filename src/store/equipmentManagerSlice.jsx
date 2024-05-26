@@ -18,7 +18,7 @@ const generateRandomId = (existingIds) => {
 
 export const equipmentManagerSlice = createSlice({
   name: "equipment_manager",
-  initialState: {
+  initialState: { 
     dataEquipment: [],
   },
   reducers: {

@@ -10,11 +10,8 @@ export const Input = ({
   onChange,
 }) => {
   const handleInputChange = (event) => {
-    const value = event.target.value;
-    onChange(name, value);
-    // if (status === "add" && inputValue.trim() === "") {
-    //     console.error(`Error: ${title} cannot be empty.`);
-    //   }
+    const v = event.target.value;
+    onChange(name, v);
   };
 
   return (
@@ -60,6 +57,7 @@ export const Input = ({
                 disabled={status === "read"}
                 onChange={handleInputChange}
                 className="h-4 w-4 cursor-pointer appearance-none overflow-hidden rounded-full border-2 border-[#D9D9D9] bg-[#D9D9D9] checked:bg-[#5DA646]"
+                checked={value === "male"}
               />
               <h3 className="">Male</h3>
             </label>
@@ -71,6 +69,7 @@ export const Input = ({
                 disabled={status === "read"}
                 onChange={handleInputChange}
                 className="h-4 w-4 cursor-pointer appearance-none overflow-hidden rounded-full border-2 border-[#D9D9D9] bg-[#D9D9D9] checked:bg-[#5DA646]"
+                checked={value === "female"}
               />
               <h3>Female</h3>
             </label>
@@ -82,10 +81,10 @@ export const Input = ({
           disabled={status === "read"}
           type={type}
           name={name}
-          defaultValue={placeholder}
+          value={value}
           onChange={handleInputChange}
-          placeholder="Enter......"
-          className={`${title === "Name" ? "h-10 text-base" : "h-8 text-xs"} w-full rounded-lg bg-[#E3EDF9] px-4 py-2  text-gray-500`}
+          placeholder={placeholder || "Enter......"}
+          className={`${title === "Name" ? "h-10 text-base" : "h-8 text-xs"} w-full rounded-lg bg-[#E3EDF9] px-4 py-2 text-gray-500`}
         />
       )}
     </div>

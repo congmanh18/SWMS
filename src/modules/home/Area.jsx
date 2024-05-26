@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconPlus, IconArrowDown, IconSearch } from "./assets/Icon";
 import TableManager from "./components/TbAreaManagement";
+import BoxWindow from "./components/BWArea";  
 import { useDispatch, useSelector } from "react-redux";
 import { loadArea } from "../../store/areaManagerSlice";
 import { useAction } from "./components/ActionContext";
@@ -10,7 +11,9 @@ function Area() {
   const { action, setAction } = useAction();
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
-
+  const handleReload = () => {
+    window.location.reload();
+  };
   const handleSelectChange = (event) => {
     setFilter(event.target.value);
   };
@@ -65,16 +68,8 @@ function Area() {
       <div className="h-full w-full flex-1 rounded-xl bg-white p-4">
         <div className="flex flex-row justify-between">
           <h1 className="ml-1 font-bold">Area Management</h1>
-          <div className="relative mr-3 flex flex-row">
-            <select
-              name="area"
-              id="selectArea"
-              defaultValue="all"
-              onChange={handleSelectChange}
-              className="inline-block cursor-pointer appearance-none rounded px-5 text-end focus:outline-none"
-            >
-            </select>
-
+          <div className="App">
+            <button onClick={handleReload}>Reload</button>
           </div>
         </div>
         <div className="relative mt-5 h-[calc(100vh-200px)] overflow-auto">
@@ -84,6 +79,7 @@ function Area() {
           />
         </div>
       </div>
+      <BoxWindow dataArea={Array.isArray(dataArea) ? dataArea : []} />
     </div>
   );
 }

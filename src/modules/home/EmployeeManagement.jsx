@@ -5,12 +5,16 @@ import BoxWindow from "./components/BoxWindow";
 import { useDispatch, useSelector } from "react-redux";
 import { loadEmployee } from "../../store/employeeManagerSlice";
 import { useAction } from "./components/ActionContext";
+// import UserUploader from "../../assets/fakedata/user/regisfake";
 
 function EmployeeManagement() {
   const { dataEmployee } = useSelector((state) => state.employee_manager);
   const [filter, setFilter] = useState("all");
   const { action, setAction } = useAction();
   const [query, setQuery] = useState("");
+  const handleReload = () => {
+    window.location.reload();
+  };
   const dispatch = useDispatch();
 
   const handleSelectChange = (event) => {
@@ -67,24 +71,12 @@ function EmployeeManagement() {
       <div className="h-full w-full flex-1 rounded-xl bg-white p-4">
         <div className="flex flex-row justify-between">
           <h1 className="ml-1 font-bold">Employee Management</h1>
-          <div className="relative mr-3 flex flex-row">
-            <select
-              name="employee"
-              id="selectEmployee"
-              defaultValue="all"
-              onChange={handleSelectChange}
-              className="inline-block cursor-pointer appearance-none rounded px-5 text-end focus:outline-none"
-            >
-              <option value="all">All</option>
-              <option value="name">Name</option>
-              <option value="role">Role</option>
-              <option value="category">Category</option>
-              <option value="gender">Gender</option>
-            </select>
-            <div className="pointer-events-none absolute right-[-5px] items-center">
-              <IconArrowDown />
-            </div>
+          <div className="App">
+            <button onClick={handleReload}>Reload</button>
           </div>
+          {/* <div className="relative mr-3 flex flex-row">
+            <UserUploader />
+          </div> */}
         </div>
         <div className="relative mt-5 h-[calc(100vh-200px)] overflow-auto">
           <TableManager
